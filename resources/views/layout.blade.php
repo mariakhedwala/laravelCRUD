@@ -4,10 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
+    <style>
+    	.is-complete { text-decoration: line-through; }
+    </style>
 </head>
 <body>
     <div class="container">
         @yield('content')
     </div>
+    <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>
 </body>
 </html>

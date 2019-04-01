@@ -8,20 +8,37 @@
         .warn {
             border: 1px solid red;
         }
-        </style>
+    </style>
 </head>
 <body>
-    <h1>Create a new project</h1>
-    <form action="/projects" method="POST">
-        {{ csrf_field() }}
+    <a href="/projects">back</a>
+    <h1>Create a new project 🤔</h1>
+    <?php 
+        if($project->id) {
+            $action = "/projects/$project->id"; 
+            $method = 'PATCH';
+            $valueTitle = $project->title;
+            $valueDesc = $project->desc;
+            $btn = "update";
+        } else {
+            $action ="/projects";
+            $method = 'POST';
+            $valueTitle = old('title');
+            $valueDesc = old('desc');
+            $btn = "create";
+        }
+    ?>
+    <form action="<?php echo $action; ?>" method="POST">
+        @method($method)
+        @csrf
         <div>
-            <input type="text" class="{{ $errors->has('title') ? 'warn' : '' }}" name="title" placeholder="project title" value="{{ old('title') }}">
+            <input type="text" class="{{ $errors->has('title') ? 'warn' : '' }}" name="title" placeholder="project title" value="<?php echo $valueTitle ?>">
         </div>
         <div>
-            <textarea name="desc" class="{{ $errors->has('desc') ? 'warn' : '' }}" placeholder="description"> {{ old('desc') }}</textarea>
+            <textarea name="desc" class="{{ $errors->has('desc') ? 'warn' : '' }}" placeholder="description"><?php echo $valueDesc ?></textarea>
         </div>
         <div>
-            <button type="submit">create project</button>
+            <button type="submit"><?php echo $btn; ?> project</button>
         </div>
         @if ($errors->any())
             <div>

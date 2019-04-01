@@ -14,9 +14,9 @@ class ProjectsController extends Controller
         return view('projects.index' , compact('projects'));
     }
 
-    public function create()
+    public function create(Project $project)
     {
-        return view('projects.create');
+        return view('projects.create', compact('project'));
     }
 
     public function store()
@@ -25,28 +25,32 @@ class ProjectsController extends Controller
             'title' => ['required', 'min:3'],
             'desc' => ['required', 'min:10']
         ]);
-        Project::create($validated);
+        // Project::create($validated);
 
-        // $project = new Project();
-        // $project->title = request('title');
-        // $project->desc = request('desc');
-        // $project->save();
+        $project = new Project();
+        $project->title = request('title');
+        $project->desc = request('desc');
+        $project->save();
+
         return redirect('/projects');
     }
 
     public function show(Project $project)
     {
+        // $twitter = app('twitter');
+        // dd($twitter);
         return view('projects.show', compact('project'));
     }
 
     public function edit(Project $project)
     {
-        return view('projects.edit', compact('project'));
+        // return $project->id;
+        return view('projects.create', compact('project'));
     }
 
     public function update(Project $project)
     {
-        $project->update(request(['title', 'desc']));
+        $project->update(request(['title', 'desc'])); //mass assignment
 
         return redirect('/projects');
     }

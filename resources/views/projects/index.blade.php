@@ -10,9 +10,22 @@
     <ul>
         @foreach ($projects as $project)
             <li>
-                <a href="/projects/{{ $project->id }}">{{ $project -> title }}</a>
+                <p>
+                    <span>{{ $project->id }}</span>
+                    <a href="/projects/{{ $project->id }}">{{ $project -> title }}</a>
+                </p>
+                <form action="/projects/{{ $project->id }}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <div>
+                        <button type="submit">delete project</button>
+                    </div>
+                </form>
             </li>
         @endforeach
     </ul>
+    <p>
+        <a href="/projects/create">create new</a>
+    </p>
 </body>
 </html>
