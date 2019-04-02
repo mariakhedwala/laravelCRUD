@@ -9,7 +9,7 @@ class ProjectsController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(4);
 
         return view('projects.index' , compact('projects'));
     }
@@ -25,12 +25,12 @@ class ProjectsController extends Controller
             'title' => ['required', 'min:3'],
             'desc' => ['required', 'min:10']
         ]);
-        // Project::create($validated);
+        Project::create($validated);
 
-        $project = new Project();
-        $project->title = request('title');
-        $project->desc = request('desc');
-        $project->save();
+        // $project = new Project();
+        // $project->title = request('title');
+        // $project->desc = request('desc');
+        // $project->save();
 
         return redirect('/projects');
     }
